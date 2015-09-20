@@ -15,6 +15,9 @@ written by Adafruit Industries
 
 // Uncomment to enable printing out nice debug messages.
 //#define DHT_DEBUG
+#ifdef TEENSYDUINO
+#define Serial Serial1
+#endif
 
 // Define where debug output will be printed.
 #define DEBUG_PRINTER Serial

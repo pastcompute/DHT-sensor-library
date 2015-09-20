@@ -3,11 +3,17 @@
 MIT license
 written by Adafruit Industries
 */
-
 #include "DHT.h"
+
+#if defined(ESP8266)
+#include <ets_sys.h>
+#else
+#define ICACHE_FLASH_ATTR
+#endif
 
 #define MIN_INTERVAL 2000
 
+ICACHE_FLASH_ATTR
 DHT::DHT(uint8_t pin, uint8_t type, uint8_t count) {
   _pin = pin;
   _type = type;
@@ -19,6 +25,7 @@ DHT::DHT(uint8_t pin, uint8_t type, uint8_t count) {
   // basd on the speed of the processor.
 }
 
+ICACHE_FLASH_ATTR
 void DHT::begin(void) {
   // set up the pins!
   pinMode(_pin, INPUT_PULLUP);
@@ -30,6 +37,7 @@ void DHT::begin(void) {
 }
 
 //boolean S == Scale.  True == Fahrenheit; False == Celcius
+ICACHE_FLASH_ATTR
 float DHT::readTemperature(bool S, bool force) {
   float f = NAN;
 
@@ -87,6 +95,7 @@ float DHT::readHumidity(bool force) {
 }
 
 //boolean isFahrenheit: True == Fahrenheit; False == Celcius
+ICACHE_FLASH_ATTR
 float DHT::computeHeatIndex(float temperature, float percentHumidity, bool isFahrenheit) {
   // Adapted from equation at: https://github.com/adafruit/DHT-sensor-library/issues/9 and
   // Wikipedia: http://en.wikipedia.org/wiki/Heat_index
@@ -116,6 +125,7 @@ float DHT::computeHeatIndex(float temperature, float percentHumidity, bool isFah
   }
 }
 
+ICACHE_FLASH_ATTR
 boolean DHT::read(bool force) {
   // Check if sensor was read less than two seconds ago and return early
   // to use last reading.
